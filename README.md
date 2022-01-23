@@ -1,3 +1,7 @@
+# Run in docker
+
+docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app dnw2022/frontend
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
