@@ -1,0 +1,27 @@
+name: Deploy Frontend
+on:
+  push:
+    branches:
+      - master
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout files
+        uses: actions/checkout@v2
+
+      - name: Create build image
+        run: docker build -t dnw2022/react-test -f Dockerfile.dev .
+      
+      - name: Run tests
+        run: docker run -e CI=true dnw2022/react-test npm test
+ 
+      - name: Create deploy image 
+        run: docker build -t registry.digitalocean.com/dnw/docker-react:latest -f Dockerfile .
+
+      - name: Push deploy image to Digital Ocean Registry
+        run: docker push registry.digitalocean.com/dnw/docker-react:latest
+
+      - name: Redeploy app
+        run: doctl apps create --spec ./.deploy/deploy.yaml --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} --upsert --wait
