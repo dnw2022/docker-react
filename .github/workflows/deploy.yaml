@@ -15,7 +15,7 @@ jobs:
         run: docker build -t dnw2022/react-test -f Dockerfile.dev .
       
       - name: Run tests
-        run: docker run -e CI=true dnw2022/react-test npm test
+        run: docker run -e CI=true dnw2022/react-test npm run test
  
       - name: Create deploy image 
         run: docker build -t registry.digitalocean.com/dnw/docker-react:latest -f Dockerfile .
