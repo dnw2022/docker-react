@@ -10,5 +10,5 @@ services:
   instance_size_slug: basic-xs
   image:
     registry_type: DOCR
-    repository: all
+    repository: dnw2022
     tag: docker-react:latest

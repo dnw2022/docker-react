@@ -18,7 +18,7 @@ jobs:
         run: docker run -e CI=true dnw2022/react-test npm run test
  
       - name: Create deploy image 
-        run: docker build -t registry.digitalocean.com/dnw/docker-react:latest -f Dockerfile .
+        run: docker build -t dnw2022/docker-react:latest -f Dockerfile .
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
@@ -29,7 +29,7 @@ jobs:
         run: doctl registry login --expiry-seconds 600 
 
       - name: Push deploy image to Digital Ocean Registry
-        run: docker push registry.digitalocean.com/dnw/docker-react:latest
+        run: docker push registry.digitalocean.com/dnw/dnw2022/docker-react:latest
 
       - name: Redeploy app
         run: doctl apps create --spec ./.deploy/deploy.yaml --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} --upsert --wait
