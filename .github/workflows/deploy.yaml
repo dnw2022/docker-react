@@ -32,7 +32,6 @@ jobs:
           echo "DO_TAG = ${{ env.DO_TAG }}"
 
       - name: Create build image
-        # run: docker build -t dnw2022/react-test -f Dockerfile.dev .
         run: docker build -t ${{ env.BUILD_IMAGE }} -f ${{ env.BUILD_DOCKERFILE }} .
       
       - name: Run tests
@@ -48,15 +47,11 @@ jobs:
 
       - name: Create deploy image
         run: |          
-          # run: docker build -t dnw2022/docker-react:latest -f Dockerfile .
           docker build -t ${{ env.IMAGE_TAG }} -f ${{ env.DOCKERFILE }} .
 
       - name: Push deploy image to Digital Ocean Registry
         run: |
-          # docker image tag dnw2022/docker-react:latest registry.digitalocean.com/dnw/dnw2022:docker-react-latest
           docker image tag ${{ env.IMAGE_TAG }} ${{ env.DO_TAG }}
-
-          # docker push registry.digitalocean.com/dnw/dnw2022:docker-react-latest
           docker push ${{ env.DO_TAG }}
 
       - name: Redeploy app
