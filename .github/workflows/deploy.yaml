@@ -13,7 +13,6 @@ env:
   IMAGE: docker-react
   DOCKERFILE: Dockerfile
   TAG: latest
-  IMAGE_TAG: "${{ env.REPO }}/${{ env.IMAGE }}:${{ env.TAG }}"
  
 jobs:
   build:
@@ -21,6 +20,16 @@ jobs:
     steps:
       - name: Checkout files
         uses: actions/checkout@v2
+
+      - name: Set environment variables
+        run: |
+          echo 'IMAGE_TAG="${{ env.REPO }}/${{ env.IMAGE }}:${{ env.TAG }}"' >> $GITHUB_ENV
+          echo 'DO_TAG="${{ env.REGISTRY }}/${{ env.REPO }}:${{ env.IMAGE }}-${{ env.TAG }}"' >> $GITHUB_ENV
+
+      - name: Display environment variables
+        run: |
+          echo "IMAGE_TAG = ${{ env.IMAGE_TAG }}"
+          echo "DO_TAG = ${{ env.DO_TAG }}"
 
       - name: Create build image
         # run: docker build -t dnw2022/react-test -f Dockerfile.dev .
@@ -38,19 +47,12 @@ jobs:
         run: doctl registry login --expiry-seconds 600
 
       - name: Create deploy image
-        run: |
-          echo "image_tag = ${{ env.IMAGE_TAG }}"
-          
+        run: |          
           # run: docker build -t dnw2022/docker-react:latest -f Dockerfile .
           docker build -t ${{ env.IMAGE_TAG }} -f ${{ env.DOCKERFILE }} .
 
       - name: Push deploy image to Digital Ocean Registry
-        env:
-          DO_TAG: "${{ env.REGISTRY }}/${{ env.REPO }}:${{ env.IMAGE }}-${{ env.TAG }}"
         run: |
-          echo "image_tag = ${{ env.IMAGE_TAG }}"
-          echo "do_tag = ${{ env.DO_TAG }}"
-
           # docker image tag dnw2022/docker-react:latest registry.digitalocean.com/dnw/dnw2022:docker-react-latest
           docker image tag ${{ env.IMAGE_TAG }} ${{ env.DO_TAG }}
 
