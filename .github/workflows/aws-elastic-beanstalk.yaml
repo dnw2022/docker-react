@@ -1,4 +1,4 @@
-name: Deploy docker-react app to Elastic Beanstalk
+name: Deploy to AWS Elastic Beanstalk
 on:
   push:
     branches:
@@ -27,6 +27,6 @@ jobs:
           application_name: docker-react
           environment_name: Dockerreact-env
           existing_bucket_name: elasticbeanstalk-eu-central-1-334920449303
-          region: ueu-central-1
+          region: eu-central-1
           version_label: ${{ github.sha }}
           deployment_package: deploy.zip
