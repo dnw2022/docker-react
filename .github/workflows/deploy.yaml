@@ -47,7 +47,7 @@ jobs:
 
       - name: Push deploy image to Digital Ocean Registry
         env:
-          DO_TAG: "${{ env.REPO }}/${{ env.IMAGE }}:${{ env.TAG }}"
+          DO_TAG: "${{ env.REGISTRY }}/${{ env.REPO }}:${{ env.IMAGE }}-${{ env.TAG }}"
         run: |
           echo "do_tag = ${{ env.DO_TAG }}"
 
