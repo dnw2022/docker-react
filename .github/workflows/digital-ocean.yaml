@@ -1,4 +1,4 @@
-name: Build and deploy
+name: Deploy to Digital Ocean
 
 on:
   push:
@@ -66,4 +66,4 @@ jobs:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Redeploy app
-        run: doctl apps create --spec ./.deploy/deploy.yaml --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} --upsert --wait
+        run: doctl apps create --spec ./.deploy/deploy-digital-ocean.yaml --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} --upsert --wait

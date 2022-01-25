@@ -1,3 +1,9 @@
+# AWS Beanstalk deployment
+
+- You might get environment warnings in AWS. https://stackoverflow.com/questions/35048543/aws-beanstalk-getting-access-denied-while-accessing-auto-scaling-and-err. Remember to rebuild your environment after the policy changes.
+
+- In the .travis-ci.yaml file the access_key_id and secret_access_key values need quotes. Otherwise you will get errors while deploying to aws about incorrect signatures.
+
 # Run in docker
 
 docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app dnw2022/frontend
