@@ -8,7 +8,11 @@ services:
   http_port: 80
   instance_count: 1
   instance_size_slug: basic-xs
+  # image:
+  #   registry_type: DOCR
+  #   repository: dnw2022
+  #   tag: docker-react-latest
   image:
-    registry_type: DOCR
-    repository: dnw2022
-    tag: docker-react-latest
+    registry_type: DOCKER_HUB
+    repository: dnw2022/docker-react
+    tag: latest
