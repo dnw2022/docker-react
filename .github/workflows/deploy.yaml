@@ -6,9 +6,9 @@ on:
       - master
 
 env:
-  REGISTRY: registry.digitalocean.com
-  PRIVATE_REGISTRY: /dnw
-  REGISTRY_USERNAME: dnw2022
+  REGISTRY: registry.digitalocean.com # leave empty for docker hub
+  PRIVATE_REGISTRY: /dnw # leave empty for docker hub
+  REGISTRY_USERNAME: dnw2022 # only used for docker hub (not for digital ocean)
   REPO: dnw2022
   BUILD_IMAGE: react-test
   BUILD_DOCKERFILE: Dockerfile.dev
@@ -55,6 +55,8 @@ jobs:
 
       - name: Push deploy image to container registry
         run: |
+          # if using docker hub, no extra tag in necessary
+          # we can just push env.IMAGE_TAG
           docker image tag ${{ env.IMAGE_TAG }} ${{ env.REGISTRY_TAG }}
           docker push ${{ env.REGISTRY_TAG }}
 

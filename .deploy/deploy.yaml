@@ -12,6 +12,7 @@ services:
     registry_type: DOCR
     repository: dnw2022
     tag: docker-react-latest
+  # note that digital ocean does NOT currently support pulling private images from docker hub
   # image:
   #   registry: dnw2022
   #   registry_type: DOCKER_HUB
