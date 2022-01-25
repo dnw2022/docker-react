@@ -6,4 +6,6 @@ COPY . .
 RUN npm run build
 
 FROM nginx:alpine
+# this does nothing locally, but a cloud provider can use this to configure a load balancer
+EXPOSE 80
 COPY --from=builder /app/build /usr/share/nginx/html
