@@ -13,6 +13,7 @@ env:
   IMAGE: docker-react
   DOCKERFILE: Dockerfile
   TAG: latest
+  IMAGE_TAG: "${{ env.REPO }}/${{ env.IMAGE }}:${{ env.TAG }}"
  
 jobs:
   build:
@@ -37,8 +38,6 @@ jobs:
         run: doctl registry login --expiry-seconds 600
 
       - name: Create deploy image
-        env:
-          IMAGE_TAG: "${{ env.REPO }}/${{ env.IMAGE }}:${{ env.TAG }}"
         run: |
           echo "image_tag = ${{ env.IMAGE_TAG }}"
           
@@ -49,6 +48,7 @@ jobs:
         env:
           DO_TAG: "${{ env.REGISTRY }}/${{ env.REPO }}:${{ env.IMAGE }}-${{ env.TAG }}"
         run: |
+          echo "image_tag = ${{ env.IMAGE_TAG }}"
           echo "do_tag = ${{ env.DO_TAG }}"
 
           # docker image tag dnw2022/docker-react:latest registry.digitalocean.com/dnw/dnw2022:docker-react-latest
