@@ -6,8 +6,8 @@ on:
       - master
 
 env:
-  REGISTRY:
-  PRIVATE_REGISTRY:
+  REGISTRY: registry.digitalocean.com
+  PRIVATE_REGISTRY: /dnw
   REGISTRY_USERNAME: dnw2022
   REPO: dnw2022
   BUILD_IMAGE: react-test
@@ -43,8 +43,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ env.REGISTRY_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          username: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          password: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Create deploy image
         run: |          
@@ -55,8 +55,8 @@ jobs:
 
       - name: Push deploy image to container registry
         run: |
-          # docker image tag ${{ env.IMAGE_TAG }} ${{ env.REGISTRY_TAG }}
-          docker push ${{ env.IMAGE_TAG }}
+          docker image tag ${{ env.IMAGE_TAG }} ${{ env.REGISTRY_TAG }}
+          docker push ${{ env.REGISTRY_TAG }}
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
