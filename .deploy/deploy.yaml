@@ -11,4 +11,4 @@ services:
   image:
     registry_type: DOCR
     repository: dnw2022
-    tag: docker-react:latest
+    tag: docker-react-latest

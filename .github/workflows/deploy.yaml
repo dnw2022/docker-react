@@ -29,10 +29,10 @@ jobs:
         run: doctl registry login --expiry-seconds 600
 
       - name: Tag image
-        run: docker image tag dnw2022/docker-react:latest registry.digitalocean.com/dnw/dnw2022/docker-react:latest
+        run: docker image tag dnw2022/docker-react:latest registry.digitalocean.com/dnw/dnw2022:docker-react-latest
 
       - name: Push deploy image to Digital Ocean Registry
-        run: docker push registry.digitalocean.com/dnw/dnw2022/docker-react:latest
+        run: docker push registry.digitalocean.com/dnw/dnw2022:docker-react-latest
 
       - name: Redeploy app
         run: doctl apps create --spec ./.deploy/deploy.yaml --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} --upsert --wait
