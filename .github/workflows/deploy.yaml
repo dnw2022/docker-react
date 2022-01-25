@@ -41,7 +41,7 @@ jobs:
       - name: Login to container registry
         uses: docker/login-action@v1
         with:
-          registry: ${{ secrets.REGISTRY }}
+          registry: ${{ env.REGISTRY }}
           username: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           password: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
