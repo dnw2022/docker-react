@@ -1,8 +1,17 @@
 # AWS Beanstalk deployment
 
-- You might get environment warnings in AWS. https://stackoverflow.com/questions/35048543/aws-beanstalk-getting-access-denied-while-accessing-auto-scaling-and-err. Remember to rebuild your environment after the policy changes.
+- In the AWS console search for beanstalk
+- Create a new application and choose "Docker" as platform and "Amazon Linux 2" as branch
+- In IAM create a new user. Choose only "Programmatic Access". Attach existing policies "AdministratorAccess-AWSElasticBeanstalk"
+- If using github actions, for the repo in github add secrets for AWS_ACCESS_KEY and AWS_SECRET_KEY
+- If using travis-ci, for the repo under more settings -> environment variables add secrets for AWS_ACCESS_KEY and AWS_SECRET_KEY 
+- Configure the "Deploy to EB" step in aws-elastic-beanstalk.yaml. Existing_bucket_name can be found under S3. The bucket is the one whose name starts with elasticbeanstalk. The region can be found as part of the application url   
 
-- In the .travis-ci.yaml file the access_key_id and secret_access_key values need quotes. Otherwise you will get errors while deploying to aws about incorrect signatures.
+- You might get environment warnings in AWS. https://stackoverflow.com/questions/35048543/aws-beanstalk-getting-access-denied-while-accessing-auto-scaling-and-err. Remember to rebuild your environment after the policy changes
+
+- In the .travis-ci.yaml file the access_key_id and secret_access_key values need quotes. Otherwise you will get errors while deploying to aws (incorrect signature)
+
+- The elasticbeanstalk provider for travis-ci does not wait until the AWS environment is updated. The einaregilsson/beanstalk-deploy@v18 step does
 
 # Run in docker
 
